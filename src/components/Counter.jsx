@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";//Import hooks from react library
+import { useState, useEffect } from "react"; //Import hooks from react library
 // component to perform counter functionality
 function Counter() {
   const [count, setCount] = useState(0); // state to track current count
@@ -10,7 +10,7 @@ function Counter() {
     <li key={index}>{prevValue}</li>
   ));
 
-  //hook to update history whenever the count changes 
+  //hook to update history whenever the count changes
   useEffect(() => {
     setPrevValue((prev) => [count, ...prev]); //add current value to the history array
   }, [count]);
@@ -22,16 +22,16 @@ function Counter() {
     // handler to perfrom increment/decrement based on Arrowup or Arrow Down
     const handleKeydown = (event) => {
       if (event.key === "ArrowUp") {
-        setCount((prev) => prev + 1);
+        setCount((prev) => prev + stepValue);
       } else if (event.key === "ArrowDown") {
-        setCount((prev) => prev - 1);
+        setCount((prev) => prev - stepValue);
       }
     };
     window.addEventListener("keydown", handleKeydown);
 
     // cleanup function to remove event listener
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, []);
+  }, [stepValue]);
 
   // Increment count by stepValue
   const handleIncrement = () => {
@@ -52,10 +52,11 @@ function Counter() {
     }
   };
 
-   // Reset count and history
+  // Reset count and history
   const handleReset = () => {
     setCount(0);
     setPrevValue([]);
+    setStepValue(1);
   };
 
   return (
@@ -63,13 +64,17 @@ function Counter() {
       <h6 className="font-bold">Advanced Counter App </h6>
       <h1 className="text-4xl mt-4">Current Count: {count}</h1>
       <div className="flex justify-center gap-6 mt-6">
-          <button onClick={handleIncrement}>Increment</button>
+        <button onClick={handleIncrement}>Increment</button>
         <button onClick={handleDecrement}>Decrement</button>
         {/* <button onClick={handleStepValue}>Step Value</button> */}
-        <button className="bg-red-500 text-white px-4 py-2 rounded"  onClick={handleReset}>Reset</button>
-
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded"
+          onClick={handleReset}
+        >
+          Reset
+        </button>
       </div>
-      
+
       <div className="mt-5">
         <label htmlFor="step-value">Step Value:</label>
         <input
